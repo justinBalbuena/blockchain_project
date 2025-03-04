@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>js-libp2p parcel.js browser example</title>
+  </head>
+
+  <body>
+    <header>
+      <h1 id="status">Starting...</h1>
+    </header>
+
+    <chat>
+      <input id="txt_send" type="text" onkeyup="send(event)" />
+      <button id="btn_send" onclick="send()" disabled>Send</button>
+      <pre id="chat"></pre>
+    </chat>
+
+    <main>
+      <h2>Log</h2>
+      <pre id="output"></pre>
+    </main>
+
+    <script src="./index.ts"></script>
+  </body>
+</html>
