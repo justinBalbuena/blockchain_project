@@ -11,7 +11,11 @@ const node = await createLibp2p({
   addresses: {
     listen: ['/ip4/0.0.0.0/tcp/9090/ws'] // WebSockets relay
   },
-  peerDiscovery: []
+  peerDiscovery: [
+    bootstrap({
+      list: ['/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb'],
+    }),
+  ],
 })
 
 await node.start()
