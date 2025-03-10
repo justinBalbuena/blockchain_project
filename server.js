@@ -1,49 +1,18 @@
-import { createLibp2p } from 'libp2p'
-import { webSockets } from '@libp2p/websockets'
-import { noise } from '@chainsafe/libp2p-noise'
-import { yamux } from '@chainsafe/libp2p-yamux'
-import { bootstrap } from '@libp2p/bootstrap'
-import { mdns } from '@libp2p/mdns'
-import { webRTCStar } from '@libp2p/webrtc-star'
+require('dotenv').config();
+const express = require('express');
+const Gun = require('gun');
+const app = express();
+const port = process.argv[2];
+console.log(port)
 
-const star = webRTCStar()
-// Known peers addresses
-const bootstrapMultiaddrs = [
-  '/ip4/127.0.0.1/tcp/9090/ws/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb',
-]
+// Serve static files from the "public" folder
+app.use(express.static('./public'));
 
-const node = await createLibp2p({
-  transports: [webSockets()],
-  connectionEncrypters: [noise()],
-  streamMuxers: [yamux()],
-  addresses: {
-    listen: ['/ip4/0.0.0.0/tcp/0/ws']
-  },
-  peerDiscovery: [
-    bootstrap({
-      list: bootstrapMultiaddrs, // provide array of multiaddrs
-    }),
-  ]
-})
 
-await node.start()
-console.log('libp2p has started')
+const server = app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
 
-const listenAddresses = node.getMultiaddrs()
-console.log('libp2p is listening on the following addresses: ', listenAddresses)
 
-node.addEventListener('peer:discovery', async (evt) => {
-  console.log('Discovered %s', evt.detail.id.toString()) // Log discovered peer
-  const discoveredPeer = evt.detail
-  
-  try { 
-    await node.dial(discoveredPeer.id)
-    console.log('Connected to: ', discoveredPeer.id)
-  } catch (error) {
-    console.error('Failed to connect to:', discoveredPeer.id, error)
-  } 
-})
-
-node.addEventListener('peer:connect', (evt) => {
-  // console.log('Connected to %s \n', evt.detail.toString(),) // Log connected peer
-})
+// Attach Gun to the same server
+Gun({ web: server });

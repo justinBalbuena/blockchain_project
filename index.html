@@ -1,49 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Libp2p Browser</title>
-    <script type="module">
-      import { createLibp2p } from 'libp2p'
-      import { webSockets } from '@libp2p/websockets'
-      import { bootstrap } from '@libp2p/bootstrap'
-
-      const relayAddress = '/ip4/127.0.0.1/tcp/9090/ws'; // Example relay address
-
-      const node = await createLibp2p({
-        transports: [webSockets()],
-        peerDiscovery: [
-          bootstrap({
-            list: [relayAddress], // Pointing to the relay node
-          }),
-        ],
-      });
-
-      // Start libp2p
-      await node.start();
-      console.log("Browser node started!");
-
-      // Handle peer discovery
-      node.addEventListener("peer:discovery", (event) => {
-        const discoveredPeer = event.detail;
-        console.log("Discovered peer: ", discoveredPeer.id.toString());
-
-        // Try to connect to the discovered peer
-        node.dial(discoveredPeer.id).then(() => {
-          console.log("Connected to:", discoveredPeer.id);
-        }).catch(err => {
-          console.log("Error connecting to peer:", err);
-        });
-      });
-
-      // Log the listening addresses for debugging
-      const listenAddresses = node.getMultiaddrs();
-      console.log("Listening on: ", listenAddresses);
-    </script>
-  </head>
-  <body>
-    <h1>Libp2p Browser Node</h1>
-    <p>Check the browser console for details.</p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Gun Peer Node</title>
+  <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    #messages { margin-top: 20px; padding: 10px; border: 1px solid #ccc; max-height: 300px; overflow-y: auto; }
+    .message { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Gun Peer Node</h1>
+  <p>Click anywhere to send a message.</p>
+  <div id="messages"></div>
+  <script src="client.js" defer></script>
+</body>
 </html>

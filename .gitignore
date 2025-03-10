@@ -1,1 +1,4 @@
 node_modules/
+libstuff/
+process.env
+radata
