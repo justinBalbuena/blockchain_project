@@ -1,14 +1,9 @@
 import { defineConfig } from 'vite';
-import portfinder from 'portfinder';
 
-export default defineConfig(async ({ command, mode }) => {
-  const port = await portfinder.getPortPromise({ port: 3000 });
+const port = process.argv[3] || 5173; // Default frontend to 5173
 
-  process.env.PORT = port;
-
-  return {
-    server: {
-      port: port,
-    },
-  };
+export default defineConfig({
+  server: {
+    port: parseInt(port, 10), // Convert argument to a number
+  },
 });

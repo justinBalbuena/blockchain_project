@@ -3,19 +3,20 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"nodemon server.js -e js,html,css\" \"vite\"",
-    "build": "vite build"
+    "dev": "cross-env BACKEND_PORT=$npm_config_backend FRONTEND_PORT=$npm_config_frontend concurrently \"nodemon server.js -- %BACKEND_PORT%\" \"vite --port %FRONTEND_PORT%\""
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
     "esbuild": "0.25.0",
     "nodemon": "^3.1.9",
     "vite": "^6.2.0"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "gun": "^0.2020.1240",
     "hbs": "^4.2.0",
