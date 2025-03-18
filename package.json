@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env BACKEND_PORT=$npm_config_backend FRONTEND_PORT=$npm_config_frontend concurrently \"nodemon server.js -- %BACKEND_PORT%\" \"vite --port %FRONTEND_PORT%\""
+    "dev": "cross-env BACKEND_PORT=$npm_config_backend FRONTEND_PORT=$npm_config_frontend concurrently \"nodemon ./server/server.js -e js,hbs,css -- %BACKEND_PORT%\" \"vite --port %FRONTEND_PORT%\""
   },
   "author": "",
   "license": "ISC",
