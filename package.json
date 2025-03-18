@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env BACKEND_PORT=$npm_config_backend FRONTEND_PORT=$npm_config_frontend concurrently \"nodemon ./server/server.js -e js,hbs,css -- %BACKEND_PORT%\" \"vite --port %FRONTEND_PORT%\""
+    "dev": "cross-env BACKEND_PORT=$npm_config_backend concurrently \"nodemon ./server/server.js $BACKEND_PORT\""
   },
   "author": "",
   "license": "ISC",
@@ -12,8 +12,7 @@
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
     "esbuild": "0.25.0",
-    "nodemon": "^3.1.9",
-    "vite": "^6.2.0"
+    "nodemon": "^3.1.9"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
@@ -22,7 +21,6 @@
     "hbs": "^4.2.0",
     "i": "^0.3.7",
     "kaplay": "^3001.0.9",
-    "multiaddr": "^10.0.1",
     "npm": "^11.1.0",
     "portfinder": "^1.0.33"
   }
