@@ -1,10 +1,118 @@
+:root {
+    --primary_color: #748FFC;
+    --accent_color: #9775fa;
+    --highlight_color: #495057;
+    --highlight_color2: #DBE4FF;
+    --background_color: #ADB5BD;
+}
+  
+* {
+    margin: 0;
+    padding: 0;
+}
+  
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #d13a3a;
+    width: 100%;
+    height: 100%;
+    font-family: "Noto Sans", sans-serif;
+    color: var(--accent_color)
 }
 
-#game-container {
-    margin: auto 500;
-    /* border: 2px solid #333; */
+/*Reusable Elements*/
+/*----------*/
+.bottom_spacer {
+    margin-bottom: 32px;
 }
+  
+.large_bottom_spacer {
+    margin-bottom: 64px;
+}
+
+.section_title {
+/* text-align: center; */
+    font-size: 48px;
+    font-weight: 600;
+}
+
+.project_img {
+    width: 40%;
+    height: 40%;
+    border-radius: 5px;
+}
+/*----------*/
+
+/*navbar contents*/
+.nav_links_sect {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.nav_link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.nav_bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px; /* Adjust width */
+    height: 100vh; /* Full height */
+    background-color: var(--highlight_color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.nav_name {
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 20px;
+}
+/*---------------------------*/
+
+
+/*---AnchorTags---*/
+a:link {
+    align-items: center;
+    color: var(--primary_color);
+    text-decoration: none;
+}
+
+a:visited {
+    align-items: center;
+    color: var(--primary_color);
+    text-decoration: none;
+}
+
+a:hover {
+    color:var(--highlight_color2);
+    background-color: var(--accent_color);
+}
+
+a:active {
+    background-color: var(--accent_color);
+}
+/*-----------------*/
+
+
+/*--Main Content Area--*/
+.main_content {
+    margin-left: 250px; /* Adjust based on sidebar width */
+    padding: 20px;
+    color: white;
+    background-color: var(--background_color);
+    height: 100vh;
+}
+/*---------------------*/

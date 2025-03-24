@@ -4902,7 +4902,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       return Object.assign(super.serialize(), { keys: this.keys.map((e) => [e.x, e.y]) });
     }
   };
-  var go = class extends yn {
+  var go2 = class extends yn {
     static {
       s(this, "AnimateChannelColor");
     }
@@ -4940,7 +4940,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       for (let a of e) i = a.update(this, n), i && !a.isFinished && (a.isFinished = true, this.trigger("animateChannelFinished", a.name)), o &&= i;
       o && !r && (r = true, this.trigger("animateFinished"));
     }, animate(o, i, a) {
-      r = false, this.unanimate(o), typeof i[0] == "number" ? e.push(new fo(o, i, a, t18.relative || false)) : i[0] instanceof E ? e.push(new ho(o, i, a, t18.relative || false, o === "pos" && (t18.followMotion || false))) : i[0] instanceof K && e.push(new go(o, i, a, t18.relative || false));
+      r = false, this.unanimate(o), typeof i[0] == "number" ? e.push(new fo(o, i, a, t18.relative || false)) : i[0] instanceof E ? e.push(new ho(o, i, a, t18.relative || false, o === "pos" && (t18.followMotion || false))) : i[0] instanceof K && e.push(new go2(o, i, a, t18.relative || false));
     }, unanimate(o) {
       let i = e.findIndex((a) => a.name === o);
       i >= 0 && e.splice(i, 1);
@@ -5748,6 +5748,52 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   }, "kaplay");
   var E2 = Xa;
 
-  // game.js
-  E2();
+  // public/game/src/game.js
+  E2({
+    global: true,
+    // Make Kaboom functions globally available
+    width: 1600,
+    // Game width
+    height: 800,
+    // Game height
+    canvas: document.querySelector("#game-container")
+    // Attach to the container
+  });
+  scene("start", () => {
+    add([
+      text("Press SPACE to Start", 24),
+      pos(center()),
+      anchor("center")
+    ]);
+    onKeyPress("space", () => go("game"));
+  });
+  scene("game", () => {
+    setGravity(1600);
+    const player = add([
+      rect(30, 30),
+      pos(center()),
+      area(),
+      body()
+    ]);
+    onKeyPress("space", () => {
+      if (player.isGrounded()) {
+        player.jump();
+      }
+    });
+    onKeyDown("left", () => {
+      player.move(-200, 0);
+    });
+    onKeyDown("right", () => {
+      player.move(200, 0);
+    });
+    add([
+      rect(width(), 48),
+      outline(4),
+      area(),
+      pos(0, height() - 48),
+      // Give objects a body() component if you don't want other solid objects pass through
+      body({ isStatic: true })
+    ]);
+  });
+  go("start");
 })();

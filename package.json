@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env BACKEND_PORT=$npm_config_backend concurrently \"nodemon ./server/server.js $BACKEND_PORT\""
+    "build": "esbuild public/game/src/game.js --bundle --outfile=public/game/src/build.js",
+    "watch": "esbuild public/game/src/game.js --bundle --outfile=public/game/src/build.js --watch",
+    "dev": "concurrently \"npm run watch\" \"nodemon ./server/server.js -e js,hbs,css -- %npm_config_port%\""
   },
   "author": "",
   "license": "ISC",
