@@ -5752,13 +5752,14 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   E2({
     global: true,
     // Make Kaboom functions globally available
-    width: 1600,
+    width: 1200,
     // Game width
-    height: 800,
+    height: 600,
     // Game height
     canvas: document.querySelector("#game-container")
     // Attach to the container
   });
+  loadSprite("singleBox", "/game/assets/sprites/singleBox.png", {});
   scene("start", () => {
     add([
       text("Press SPACE to Start", 24),
@@ -5768,23 +5769,33 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     onKeyPress("space", () => go("game"));
   });
   scene("game", () => {
-    setGravity(1600);
+    function jumpAndSpin(player2) {
+      if (player2.isGrounded()) {
+        player2.jump();
+        player2.angle = 0;
+        tween(
+          0,
+          360,
+          1.2,
+          // duration in seconds
+          (angle) => player2.angle = angle,
+          easings.easeInOutCubic
+        );
+      }
+    }
+    setGravity(1200);
     const player = add([
-      rect(30, 30),
-      pos(center()),
+      sprite("singleBox"),
+      pos(200, 200),
+      anchor("center"),
+      scale(5),
       area(),
       body()
     ]);
     onKeyPress("space", () => {
       if (player.isGrounded()) {
-        player.jump();
+        jumpAndSpin(player);
       }
-    });
-    onKeyDown("left", () => {
-      player.move(-200, 0);
-    });
-    onKeyDown("right", () => {
-      player.move(200, 0);
     });
     add([
       rect(width(), 48),
@@ -5794,6 +5805,34 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       // Give objects a body() component if you don't want other solid objects pass through
       body({ isStatic: true })
     ]);
+    player.onCollide("spike", () => {
+      addKaboom(player.pos);
+      player.destroy();
+      shake(12);
+    });
+    onUpdate("spike", (spike) => {
+      spike.move(-spike.speed, 0);
+      if (spike.pos.x < -30) {
+        destroy(spike);
+      }
+    });
+    loop(3, () => {
+      const spawnX = width() + 20;
+      const spawnY = height() - 64;
+      const speed = 360;
+      const triple_spike = chance(0.3);
+      const double_spike = chance(0.4);
+      const single_spike = chance(0.7);
+      add([
+        rect(60, 30),
+        pos(spwanX, spwanY),
+        area(),
+        body(),
+        anchor("center"),
+        "spike",
+        { speed }
+      ]);
+    });
   });
   go("start");
 })();
