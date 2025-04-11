@@ -265,7 +265,7 @@
     return new E(...t18);
   }
   s(v, "vec2");
-  var z = class t3 {
+  var z2 = class t3 {
     static {
       s(this, "Quad");
     }
@@ -293,7 +293,7 @@
     }
   };
   function me(t18, e, n, r) {
-    return new z(t18, e, n, r);
+    return new z2(t18, e, n, r);
   }
   s(me, "quad");
   var Dt = class t4 {
@@ -2491,11 +2491,11 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       let n = e.width + this.padding * 2, r = e.height + this.padding * 2;
       if (n > this.canvas.width || r > this.canvas.height) {
         let a = Pe.fromImage(this.gfx, e);
-        return this.bigTextures.push(a), [a, new z(0, 0, 1, 1), 0];
+        return this.bigTextures.push(a), [a, new z2(0, 0, 1, 1), 0];
       }
       this.x + n > this.canvas.width && (this.x = 0, this.y += this.curHeight, this.curHeight = 0), this.y + r > this.canvas.height && (this.c2d.clearRect(0, 0, this.canvas.width, this.canvas.height), this.textures.push(Pe.fromImage(this.gfx, this.canvas)), this.x = 0, this.y = 0, this.curHeight = 0);
       let o = this.textures[this.textures.length - 1], i = new E(this.x + this.padding, this.y + this.padding);
-      return this.x += n, r > this.curHeight && (this.curHeight = r), e instanceof ImageData ? this.c2d.putImageData(e, i.x, i.y) : this.c2d.drawImage(e, i.x, i.y), o.update(this.canvas), this.texturesPosition.set(this.lastTextureId, { position: i, size: new E(e.width, e.height), texture: o }), this.lastTextureId++, [o, new z(i.x / this.canvas.width, i.y / this.canvas.height, e.width / this.canvas.width, e.height / this.canvas.height), this.lastTextureId - 1];
+      return this.x += n, r > this.curHeight && (this.curHeight = r), e instanceof ImageData ? this.c2d.putImageData(e, i.x, i.y) : this.c2d.drawImage(e, i.x, i.y), o.update(this.canvas), this.texturesPosition.set(this.lastTextureId, { position: i, size: new E(e.width, e.height), texture: o }), this.lastTextureId++, [o, new z2(i.x / this.canvas.width, i.y / this.canvas.height, e.width / this.canvas.width, e.height / this.canvas.height), this.lastTextureId - 1];
     }
     free() {
       for (let e of this.textures) e.free();
@@ -2635,7 +2635,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       s(this, "SpriteData");
     }
     tex;
-    frames = [new z(0, 0, 1, 1)];
+    frames = [new z2(0, 0, 1, 1)];
     anims = {};
     slice9 = null;
     constructor(e, n, r = {}, o = null) {
@@ -2651,7 +2651,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       return typeof e == "string" ? t15.fromURL(e, n) : Promise.resolve(t15.fromImage(e, n));
     }
     static fromImage(e, n = {}) {
-      let [r, o] = c.assets.packer.add(e), i = n.frames ? n.frames.map((a) => new z(o.x + a.x * o.w, o.y + a.y * o.h, a.w * o.w, a.h * o.h)) : Nr(n.sliceX || 1, n.sliceY || 1, o.x, o.y, o.w, o.h);
+      let [r, o] = c.assets.packer.add(e), i = n.frames ? n.frames.map((a) => new z2(o.x + a.x * o.w, o.y + a.y * o.h, a.w * o.w, a.h * o.h)) : Nr(n.sliceX || 1, n.sliceY || 1, o.x, o.y, o.w, o.h);
       return new t15(r, i, n.anims, n.slice9);
     }
     static fromURL(e, n = {}) {
@@ -2681,7 +2681,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   s(Tt, "loadSprite");
   function Nr(t18 = 1, e = 1, n = 0, r = 0, o = 1, i = 1) {
     let a = [], l = o / t18, u = i / e;
-    for (let m = 0; m < e; m++) for (let d = 0; d < t18; d++) a.push(new z(n + d * l, r + m * u, l, u));
+    for (let m = 0; m < e; m++) for (let d = 0; d < t18; d++) a.push(new z2(n + d * l, r + m * u, l, u));
     return a;
   }
   s(Nr, "slice");
@@ -2705,7 +2705,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     e = de(e), n = de(n), typeof e == "string" && !n && (n = xs(e) + ".json");
     let r = typeof n == "string" ? Ot(n) : Promise.resolve(n);
     return c.assets.sprites.add(t18, r.then((o) => {
-      let i = o.meta.size, a = o.frames.map((u) => new z(u.frame.x / i.w, u.frame.y / i.h, u.frame.w / i.w, u.frame.h / i.h)), l = {};
+      let i = o.meta.size, a = o.frames.map((u) => new z2(u.frame.x / i.w, u.frame.y / i.h, u.frame.w / i.w, u.frame.h / i.h)), l = {};
       for (let u of o.meta.frameTags) u.from === u.to ? l[u.name] = u.from : l[u.name] = { from: u.from, to: u.to, speed: 10, loop: true, pingpong: u.direction === "pingpong" };
       return Le.from(e, { frames: a, anims: l });
     }));
@@ -2750,7 +2750,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   s(Xs, "loadFont");
   function Qs(t18, e, n, r) {
     let o = t18.width / e, i = {}, a = r.split("").entries();
-    for (let [l, u] of a) i[u] = new z(l % o * e, Math.floor(l / o) * n, e, n);
+    for (let [l, u] of a) i[u] = new z2(l % o * e, Math.floor(l / o) * n, e, n);
     return { tex: t18, map: i, size: n };
   }
   s(Qs, "makeFont");
@@ -2907,7 +2907,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     })) : ln(Le.from(t18).then((n) => {
       let r = {};
       for (let o in e) {
-        let i = e[o], a = n.frames[0], l = 2048 * a.w, u = 2048 * a.h, m = i.frames ? i.frames.map((C) => new z(a.x + (i.x + C.x) / l * a.w, a.y + (i.y + C.y) / u * a.h, C.w / l * a.w, C.h / u * a.h)) : Nr(i.sliceX || 1, i.sliceY || 1, a.x + i.x / l * a.w, a.y + i.y / u * a.h, i.width / l * a.w, i.height / u * a.h), d = new Le(n.tex, m, i.anims);
+        let i = e[o], a = n.frames[0], l = 2048 * a.w, u = 2048 * a.h, m = i.frames ? i.frames.map((C) => new z2(a.x + (i.x + C.x) / l * a.w, a.y + (i.y + C.y) / u * a.h, C.w / l * a.w, C.h / u * a.h)) : Nr(i.sliceX || 1, i.sliceY || 1, a.x + i.x / l * a.w, a.y + i.y / u * a.h, i.width / l * a.w, i.height / u * a.h), d = new Le(n.tex, m, i.anims);
         c.assets.sprites.addLoaded(o, d), r[o] = d;
       }
       return r;
@@ -3358,7 +3358,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         G.outline && G.outline.width && G.outline.color && (w.lineJoin = "round", w.lineWidth = G.outline.width * 2, w.strokeStyle = G.outline.color.toHex(), w.strokeText(x, G.outline.width, G.outline.width), M += G.outline.width * 2, R += G.outline.width * 3), w.fillText(x, G.outline?.width ?? 0, G.outline?.width ?? 0);
         let F = w.getImageData(0, 0, M, R);
         if (G.cursor.x + M > 2048 && (G.cursor.x = 0, G.cursor.y += G.maxHeight, G.maxHeight = 0, G.cursor.y > 2048)) throw new Error("Font atlas exceeds character limit");
-        e.tex.update(F, G.cursor.x, G.cursor.y), e.map[x] = new z(G.cursor.x, G.cursor.y, M, R), G.cursor.x += M + 1, G.maxHeight = Math.max(G.maxHeight, R);
+        e.tex.update(F, G.cursor.x, G.cursor.y), e.map[x] = new z2(G.cursor.x, G.cursor.y, M, R), G.cursor.x += M + 1, G.maxHeight = Math.max(G.maxHeight, R);
       }
     }
     let i = t18.size || e.size, a = v(t18.scale ?? 1).scale(i / e.size), l = t18.lineSpacing ?? 0, u = t18.letterSpacing ?? 0, m = 0, d = 0, C = 0, p = [], b = [], f = 0, O = null, g = 0, y;
@@ -3370,7 +3370,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         let D = e.map[A];
         if (D) {
           let G = D.w * a.x;
-          t18.width && m + G > t18.width && (C += i + l, O != null && (f -= b.length - O, A = o[f], D = e.map[A], G = D.w * a.x, b = b.slice(0, O - 1), m = g), O = null, g = 0, p.push({ width: m - u, chars: b }), m = y ?? 0, b = []), b.push({ tex: e.tex, width: D.w, height: D.h, quad: new z(D.x / e.tex.width, D.y / e.tex.height, D.w / e.tex.width, D.h / e.tex.height), ch: A, pos: new E(m, C), opacity: t18.opacity ?? 1, color: t18.color ?? K.WHITE, scale: v(a), angle: 0 }), A === " " && (O = b.length, g = m), t18.indentAll && y === void 0 && /\S/.test(A) && (y = m), m += G, d = Math.max(d, m), m += u;
+          t18.width && m + G > t18.width && (C += i + l, O != null && (f -= b.length - O, A = o[f], D = e.map[A], G = D.w * a.x, b = b.slice(0, O - 1), m = g), O = null, g = 0, p.push({ width: m - u, chars: b }), m = y ?? 0, b = []), b.push({ tex: e.tex, width: D.w, height: D.h, quad: new z2(D.x / e.tex.width, D.y / e.tex.height, D.w / e.tex.width, D.h / e.tex.height), ch: A, pos: new E(m, C), opacity: t18.opacity ?? 1, color: t18.color ?? K.WHITE, scale: v(a), angle: 0 }), A === " " && (O = b.length, g = m), t18.indentAll && y === void 0 && /\S/.test(A) && (y = m), m += G, d = Math.max(d, m), m += u;
         }
       }
       f++;
@@ -3401,7 +3401,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   function it(t18) {
     if (t18.width === void 0 || t18.height === void 0) throw new Error('drawUVQuad() requires property "width" and "height".');
     if (t18.width <= 0 || t18.height <= 0) return;
-    let e = t18.width, n = t18.height, o = Ne(t18.anchor || mt).scale(new E(e, n).scale(-0.5)), i = t18.quad || new z(0, 0, 1, 1), a = t18.color || I(255, 255, 255), l = t18.opacity ?? 1, u = t18.tex ? 0.1 / t18.tex.width : 0, m = t18.tex ? 0.1 / t18.tex.height : 0, d = i.x + u, C = i.y + m, p = i.w - u * 2, b = i.h - m * 2;
+    let e = t18.width, n = t18.height, o = Ne(t18.anchor || mt).scale(new E(e, n).scale(-0.5)), i = t18.quad || new z2(0, 0, 1, 1), a = t18.color || I(255, 255, 255), l = t18.opacity ?? 1, u = t18.tex ? 0.1 / t18.tex.width : 0, m = t18.tex ? 0.1 / t18.tex.height : 0, d = i.x + u, C = i.y + m, p = i.w - u * 2, b = i.h - m * 2;
     be(), Q(t18.pos), $e(t18.angle), rt(t18.scale), Q(o), je([{ pos: new E(-e / 2, n / 2), uv: new E(t18.flipX ? d + p : d, t18.flipY ? C : C + b), color: a, opacity: l }, { pos: new E(-e / 2, -n / 2), uv: new E(t18.flipX ? d + p : d, t18.flipY ? C + b : C), color: a, opacity: l }, { pos: new E(e / 2, -n / 2), uv: new E(t18.flipX ? d : d + p, t18.flipY ? C + b : C), color: a, opacity: l }, { pos: new E(e / 2, n / 2), uv: new E(t18.flipX ? d : d + p, t18.flipY ? C : C + b), color: a, opacity: l }], [0, 1, 3, 1, 2, 3], t18.fixed, t18.tex, t18.shader, t18.uniform ?? void 0), pe();
   }
   s(it, "drawUVQuad");
@@ -3519,18 +3519,18 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   s(hi, "drawMasked");
   function Vt(t18) {
     if (!t18.tex) throw new Error('drawTexture() requires property "tex".');
-    let e = t18.quad ?? new z(0, 0, 1, 1), n = t18.tex.width * e.w, r = t18.tex.height * e.h, o = new E(1);
+    let e = t18.quad ?? new z2(0, 0, 1, 1), n = t18.tex.width * e.w, r = t18.tex.height * e.h, o = new E(1);
     if (t18.tiled) {
       let i = Ne(t18.anchor || mt), a = (t18.pos?.x || 0) - (i.x + 1) * 0.5 * (t18.width || n), l = (t18.pos?.y || 0) - (i.y + 1) * 0.5 * (t18.height || r), u = (t18.width || n) / n, m = (t18.height || r) / r, d = Math.floor(u), C = Math.floor(m), p = u - d, b = m - C, f = (d + p ? 1 : 0) * (C + b ? 1 : 0), O = new Array(f * 6), g = new Array(f * 4), y = 0, V = s((A, D, G, x, w) => {
         O[y * 6 + 0] = y * 4 + 0, O[y * 6 + 1] = y * 4 + 1, O[y * 6 + 2] = y * 4 + 3, O[y * 6 + 3] = y * 4 + 1, O[y * 6 + 4] = y * 4 + 2, O[y * 6 + 5] = y * 4 + 3, g[y * 4 + 0] = { pos: new E(A - i.x, D - i.y), uv: new E(w.x, w.y), color: t18.color || K.WHITE, opacity: t18.opacity || 1 }, g[y * 4 + 1] = { pos: new E(A + G - i.x, D - i.y), uv: new E(w.x + w.w, w.y), color: t18.color || K.WHITE, opacity: t18.opacity || 1 }, g[y * 4 + 2] = { pos: new E(A + G - i.x, D + x - i.y), uv: new E(w.x + w.w, w.y + w.h), color: t18.color || K.WHITE, opacity: t18.opacity || 1 }, g[y * 4 + 3] = { pos: new E(A - i.x, D + x - i.y), uv: new E(w.x, w.y + w.h), color: t18.color || K.WHITE, opacity: t18.opacity || 1 }, y++;
       }, "addQuad");
       for (let A = 0; A < C; A++) {
         for (let D = 0; D < d; D++) V(D * n, A * r, n, r, e);
-        p && V(d * n, A * r, n * p, r, new z(e.x, e.y, e.w * p, e.h));
+        p && V(d * n, A * r, n * p, r, new z2(e.x, e.y, e.w * p, e.h));
       }
       if (b) {
-        for (let A = 0; A < d; A++) V(A * n, C * r, n, r * b, new z(e.x, e.y, e.w, e.h * b));
-        p && V(d * n, C * r, n * p, r * b, new z(e.x, e.y, e.w * p, e.h * b));
+        for (let A = 0; A < d; A++) V(A * n, C * r, n, r * b, new z2(e.x, e.y, e.w, e.h * b));
+        p && V(d * n, C * r, n * p, r * b, new z2(e.x, e.y, e.w * p, e.h * b));
       }
       je(g, O, t18.fixed, t18.tex, t18.shader, t18.uniform ?? void 0);
     } else t18.width && t18.height ? (o.x = t18.width / n, o.y = t18.height / r) : t18.width ? (o.x = t18.width / n, o.y = o.x) : t18.height && (o.y = t18.height / r, o.x = o.y), it(Object.assign({}, t18, { scale: o.scale(t18.scale || new E(1)), tex: t18.tex, quad: e, width: n, height: r }));
@@ -3542,7 +3542,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     if (!e || !e.data) return;
     let n = e.data.frames[t18.frame ?? 0];
     if (!n) throw new Error(`Frame not found: ${t18.frame ?? 0}`);
-    Vt(Object.assign({}, t18, { tex: e.data.tex, quad: n.scale(t18.quad ?? new z(0, 0, 1, 1)) }));
+    Vt(Object.assign({}, t18, { tex: e.data.tex, quad: n.scale(t18.quad ?? new z2(0, 0, 1, 1)) }));
   }
   s(gi, "drawSprite");
   function bi(t18, e) {
@@ -3658,7 +3658,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     }
   };
   function Ei(t18, e) {
-    let n = e.lifetime, r = [], o = t18.colors || [K.WHITE], i = t18.opacities || [1], a = t18.quads || [new z(0, 0, 1, 1)], l = t18.scales || [1], u = t18.lifeTime, m = e.direction, d = e.spread, C = t18.speed || [0, 0], p = t18.angle || [0, 0], b = t18.angularVelocity || [0, 0], f = t18.acceleration || [v(0), v(0)], O = t18.damping || [0, 0], g = [], y = new Array(t18.max), V = 0, A = 0;
+    let n = e.lifetime, r = [], o = t18.colors || [K.WHITE], i = t18.opacities || [1], a = t18.quads || [new z2(0, 0, 1, 1)], l = t18.scales || [1], u = t18.lifeTime, m = e.direction, d = e.spread, C = t18.speed || [0, 0], p = t18.angle || [0, 0], b = t18.angularVelocity || [0, 0], f = t18.acceleration || [v(0), v(0)], O = t18.damping || [0, 0], g = [], y = new Array(t18.max), V = 0, A = 0;
     for (let x = 0; x < t18.max; x++) {
       g[x * 6 + 0] = x * 4 + 0, g[x * 6 + 1] = x * 4 + 1, g[x * 6 + 2] = x * 4 + 3, g[x * 6 + 3] = x * 4 + 1, g[x * 6 + 4] = x * 4 + 2, g[x * 6 + 5] = x * 4 + 3;
       for (let w = 0; w < 4; w++) y[x * 4 + w] = { pos: new E(0, 0), uv: new E(0, 0), color: I(255, 255, 255), opacity: 1 };
@@ -4526,7 +4526,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       let C = a(m.tex, d, e.width, e.height);
       u.width = m.tex.width * d.w * C.x, u.height = m.tex.height * d.h * C.y, e.anim && u.play(e.anim), n = m, i.trigger(n);
     }, "setSpriteData");
-    return { id: "sprite", width: 0, height: 0, frame: e.frame || 0, quad: e.quad || new z(0, 0, 1, 1), animSpeed: e.animSpeed ?? 1, flipX: e.flipX ?? false, flipY: e.flipY ?? false, get sprite() {
+    return { id: "sprite", width: 0, height: 0, frame: e.frame || 0, quad: e.quad || new z2(0, 0, 1, 1), animSpeed: e.animSpeed ?? 1, flipX: e.flipX ?? false, flipY: e.flipY ?? false, get sprite() {
       return t18.toString();
     }, set sprite(u) {
       let m = It(u);
@@ -4545,7 +4545,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
           let M = w[S], R = w[S + 9];
           Vt(Object.assign(Ke(this), { pos: R.pos(), tex: n.tex, quad: u.scale(M), flipX: this.flipX, flipY: this.flipY, tiled: e.tiled, width: R.w, height: R.h }));
         }
-      } else Vt(Object.assign(Ke(this), { tex: n.tex, quad: u.scale(this.quad ?? new z(0, 0, 1, 1)), flipX: this.flipX, flipY: this.flipY, tiled: e.tiled, width: this.width, height: this.height }));
+      } else Vt(Object.assign(Ke(this), { tex: n.tex, quad: u.scale(this.quad ?? new z2(0, 0, 1, 1)), flipX: this.flipX, flipY: this.flipY, tiled: e.tiled, width: this.width, height: this.height }));
     }, add() {
       let u = It(t18);
       u ? u.onLoad((m) => l(this, m)) : Nt(() => l(this, It(t18).data));
@@ -5552,7 +5552,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     s(V, "makeCanvas");
     function A() {
       p.clear(p.COLOR_BUFFER_BIT), f.frameBuffer.bind(), p.clear(p.COLOR_BUFFER_BIT), f.bgColor || ze(() => {
-        it({ width: ae(), height: ce(), quad: new z(0, 0, ae() / 64, ce() / 64), tex: f.bgTex, fixed: true });
+        it({ width: ae(), height: ce(), quad: new z2(0, 0, ae() / 64, ce() / 64), tex: f.bgTex, fixed: true });
       }), f.renderer.numDraws = 0, f.fixed = false, f.transformStack.length = 0, f.transform = new he();
     }
     s(A, "frameStart");
@@ -5740,7 +5740,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         vn(Y);
       }
     }), Jn(), cr();
-    let Xe = { _k: c, VERSION: ac, loadRoot: Ns, loadProgress: Fe, loadSprite: Tt, loadSpriteAtlas: Wr, loadSound: oi, loadMusic: si, loadBitmapFont: Js, loadFont: Xs, loadShader: ti, loadShaderURL: ni, loadAseprite: $s, loadPedit: Zs, loadBean: Ws, loadJSON: Us, load: ln, getSound: Yr, getFont: Hr, getBitmapFont: Hn, getSprite: _r, getShader: zr, getAsset: Hs, Asset: le, SpriteData: Le, SoundData: ot, width: ae, height: ce, center: wt, dt: te, fixedDt: an, restDt: un, time: m.time, screenshot: m.screenshot, record: F, isFocused: j, setCursor: m.setCursor, getCursor: m.getCursor, setCursorLocked: m.setCursorLocked, isCursorLocked: m.isCursorLocked, setFullscreen: m.setFullscreen, isFullscreen: m.isFullscreen, isTouchscreen: m.isTouchscreen, onLoad: Nt, onLoadError: zi, onLoading: Ui, onResize: Hi, onGamepadConnect: m.onGamepadConnect, onGamepadDisconnect: m.onGamepadDisconnect, onError: qi, onCleanup: mr, flash: uo, setCamPos: no, getCamPos: ro, setCamRot: io, getCamRot: ao, setCamScale: oo, getCamScale: so, getCamTransform: Yi, camPos: Xi, camScale: Qi, camFlash: Zi, camRot: Ji, camTransform: Wi, shake: $i, toScreen: dn, toWorld: sr, setGravity: ta, getGravity: na, setGravityDirection: ra, getGravityDirection: ht, setBackground: Ls, getBackground: js, getGamepads: m.getGamepads, getTreeRoot: da, add: H, make: fn, destroy: ir, destroyAll: W, get: N, query: X, readd: q, pos: Pt, scale: Ut, rotate: qa, color: Zn, opacity: er, anchor: gn, area: Ra, sprite: hn, text: ya, polygon: Ti, rect: nr, circle: xi, uvquad: xa, outline: Oi, particles: Ei, body: Da, platformEffector: Ia, surfaceEffector: Fa, areaEffector: La, pointEffector: ja, buoyancyEffector: ka, constantForce: Ka, doubleJump: Ba, shader: Ai, textInput: Ga, timer: bn, fixed: ar, stay: lr, health: Aa, lifespan: Sa, named: Va, state: Pa, z: za, layer: Na, move: Ua, offscreen: Ha, follow: _a, fadeIn: Ci, mask: wi, drawon: vi, raycast: tr, tile: rr, animate: Ta, serializeAnimation: bo, agent: va, sentry: Oa, patrol: wa, pathfinder: Ca, trigger: Vi, on: Me, onFixedUpdate: Pi, onUpdate: Gi, onDraw: Mi, onAdd: eo, onDestroy: Ri, onTag: to, onUntag: Fi, onUse: Di, onUnuse: Bi, onClick: Ii, onCollide: Li, onCollideUpdate: ji, onCollideEnd: Ki, onHover: ki, onHoverUpdate: _i, onHoverEnd: Ni, onKeyDown: m.onKeyDown, onKeyPress: m.onKeyPress, onKeyPressRepeat: m.onKeyPressRepeat, onKeyRelease: m.onKeyRelease, onMouseDown: m.onMouseDown, onMousePress: m.onMousePress, onMouseRelease: m.onMouseRelease, onMouseMove: m.onMouseMove, onCharInput: m.onCharInput, onTouchStart: m.onTouchStart, onTouchMove: m.onTouchMove, onTouchEnd: m.onTouchEnd, onScroll: m.onScroll, onHide: m.onHide, onShow: m.onShow, onGamepadButtonDown: m.onGamepadButtonDown, onGamepadButtonPress: m.onGamepadButtonPress, onGamepadButtonRelease: m.onGamepadButtonRelease, onGamepadStick: m.onGamepadStick, onButtonPress: m.onButtonPress, onButtonDown: m.onButtonDown, onButtonRelease: m.onButtonRelease, mousePos: Nn, mouseDeltaPos: m.mouseDeltaPos, isKeyDown: m.isKeyDown, isKeyPressed: m.isKeyPressed, isKeyPressedRepeat: m.isKeyPressedRepeat, isKeyReleased: m.isKeyReleased, isMouseDown: m.isMouseDown, isMousePressed: m.isMousePressed, isMouseReleased: m.isMouseReleased, isMouseMoved: m.isMouseMoved, isGamepadButtonPressed: m.isGamepadButtonPressed, isGamepadButtonDown: m.isGamepadButtonDown, isGamepadButtonReleased: m.isGamepadButtonReleased, getGamepadStick: m.getGamepadStick, isButtonPressed: m.isButtonPressed, isButtonDown: m.isButtonDown, isButtonReleased: m.isButtonReleased, setButton: m.setButton, getButton: m.getButton, pressButton: m.pressButton, releaseButton: m.releaseButton, getLastInputDeviceType: m.getLastInputDeviceType, charInputted: m.charInputted, loop: Z, wait: k, play: aa, setVolume: co, getVolume: lo, volume: ua, burp: ur, audioCtx: O.ctx, Line: Te, Rect: $, Circle: we, Ellipse: ke, Point: An, Polygon: ye, Vec2: E, Color: K, Mat4: he, Quad: z, RNG: Xt, rand: ge, randi: wr, randSeed: Vo, vec2: v, rgb: I, hsl2rgb: To, quad: me, choose: Mo, chooseMultiple: Go, shuffle: Or, chance: Po, lerp: fe, tween: ee, easings: nt, map: Ve, mapc: So, wave: Sn, deg2rad: ue, rad2deg: lt, clamp: Se, evaluateQuadratic: ko, evaluateQuadraticFirstDerivative: _o, evaluateQuadraticSecondDerivative: No, evaluateBezier: Jt, evaluateBezierFirstDerivative: Uo, evaluateBezierSecondDerivative: Ho, evaluateCatmullRom: qo, evaluateCatmullRomFirstDerivative: zo, curveLengthApproximation: Vr, normalizedCurve: Yo, hermite: Lt, cardinal: Pr, catmullRom: jt, bezier: Wo, kochanekBartels: $o, easingSteps: Zo, easingLinear: Qo, easingCubicBezier: Jo, testLineLine: Vn, testRectRect: Er, testRectLine: Pn, testRectPoint: Bt, testCirclePolygon: Qt, testLinePoint: Gn, testLineCircle: Ft, isConvex: ns, triangulate: Rn, NavMesh: kn, drawSprite: gi, drawText: Jr, formatText: He, drawRect: ve, drawLine: _t, drawLines: kt, drawTriangle: Xn, drawCircle: Ue, drawEllipse: zn, drawUVQuad: it, drawPolygon: Ge, drawCurve: Yn, drawBezier: ii, drawFormattedText: qe, drawMasked: hi, drawSubtracted: bi, pushTransform: be, popTransform: pe, pushTranslate: Q, pushScale: rt, pushRotate: $e, pushMatrix: Ks, usePostEffect: D, makeCanvas: V, debug: w, scene: fa, getSceneName: ba, go: ha, onSceneLeave: ga, layers: pa, getLayers: la, setLayers: po, getDefaultLayer: ma, addLevel: Si, getData: S, setData: M, download: Fn, downloadJSON: ys, downloadText: Gr, downloadBlob: Mr, plug: R, ASCII_CHARS: Dn, canvas: m.canvas, addKaboom: ca, LEFT: E.LEFT, RIGHT: E.RIGHT, UP: E.UP, DOWN: E.DOWN, RED: K.RED, GREEN: K.GREEN, BLUE: K.BLUE, YELLOW: K.YELLOW, MAGENTA: K.MAGENTA, CYAN: K.CYAN, WHITE: K.WHITE, BLACK: K.BLACK, quit: pr, KEvent: oe, KEventHandler: Ye, KEventController: _e, cancel: s(() => Bn, "cancel") };
+    let Xe = { _k: c, VERSION: ac, loadRoot: Ns, loadProgress: Fe, loadSprite: Tt, loadSpriteAtlas: Wr, loadSound: oi, loadMusic: si, loadBitmapFont: Js, loadFont: Xs, loadShader: ti, loadShaderURL: ni, loadAseprite: $s, loadPedit: Zs, loadBean: Ws, loadJSON: Us, load: ln, getSound: Yr, getFont: Hr, getBitmapFont: Hn, getSprite: _r, getShader: zr, getAsset: Hs, Asset: le, SpriteData: Le, SoundData: ot, width: ae, height: ce, center: wt, dt: te, fixedDt: an, restDt: un, time: m.time, screenshot: m.screenshot, record: F, isFocused: j, setCursor: m.setCursor, getCursor: m.getCursor, setCursorLocked: m.setCursorLocked, isCursorLocked: m.isCursorLocked, setFullscreen: m.setFullscreen, isFullscreen: m.isFullscreen, isTouchscreen: m.isTouchscreen, onLoad: Nt, onLoadError: zi, onLoading: Ui, onResize: Hi, onGamepadConnect: m.onGamepadConnect, onGamepadDisconnect: m.onGamepadDisconnect, onError: qi, onCleanup: mr, flash: uo, setCamPos: no, getCamPos: ro, setCamRot: io, getCamRot: ao, setCamScale: oo, getCamScale: so, getCamTransform: Yi, camPos: Xi, camScale: Qi, camFlash: Zi, camRot: Ji, camTransform: Wi, shake: $i, toScreen: dn, toWorld: sr, setGravity: ta, getGravity: na, setGravityDirection: ra, getGravityDirection: ht, setBackground: Ls, getBackground: js, getGamepads: m.getGamepads, getTreeRoot: da, add: H, make: fn, destroy: ir, destroyAll: W, get: N, query: X, readd: q, pos: Pt, scale: Ut, rotate: qa, color: Zn, opacity: er, anchor: gn, area: Ra, sprite: hn, text: ya, polygon: Ti, rect: nr, circle: xi, uvquad: xa, outline: Oi, particles: Ei, body: Da, platformEffector: Ia, surfaceEffector: Fa, areaEffector: La, pointEffector: ja, buoyancyEffector: ka, constantForce: Ka, doubleJump: Ba, shader: Ai, textInput: Ga, timer: bn, fixed: ar, stay: lr, health: Aa, lifespan: Sa, named: Va, state: Pa, z: za, layer: Na, move: Ua, offscreen: Ha, follow: _a, fadeIn: Ci, mask: wi, drawon: vi, raycast: tr, tile: rr, animate: Ta, serializeAnimation: bo, agent: va, sentry: Oa, patrol: wa, pathfinder: Ca, trigger: Vi, on: Me, onFixedUpdate: Pi, onUpdate: Gi, onDraw: Mi, onAdd: eo, onDestroy: Ri, onTag: to, onUntag: Fi, onUse: Di, onUnuse: Bi, onClick: Ii, onCollide: Li, onCollideUpdate: ji, onCollideEnd: Ki, onHover: ki, onHoverUpdate: _i, onHoverEnd: Ni, onKeyDown: m.onKeyDown, onKeyPress: m.onKeyPress, onKeyPressRepeat: m.onKeyPressRepeat, onKeyRelease: m.onKeyRelease, onMouseDown: m.onMouseDown, onMousePress: m.onMousePress, onMouseRelease: m.onMouseRelease, onMouseMove: m.onMouseMove, onCharInput: m.onCharInput, onTouchStart: m.onTouchStart, onTouchMove: m.onTouchMove, onTouchEnd: m.onTouchEnd, onScroll: m.onScroll, onHide: m.onHide, onShow: m.onShow, onGamepadButtonDown: m.onGamepadButtonDown, onGamepadButtonPress: m.onGamepadButtonPress, onGamepadButtonRelease: m.onGamepadButtonRelease, onGamepadStick: m.onGamepadStick, onButtonPress: m.onButtonPress, onButtonDown: m.onButtonDown, onButtonRelease: m.onButtonRelease, mousePos: Nn, mouseDeltaPos: m.mouseDeltaPos, isKeyDown: m.isKeyDown, isKeyPressed: m.isKeyPressed, isKeyPressedRepeat: m.isKeyPressedRepeat, isKeyReleased: m.isKeyReleased, isMouseDown: m.isMouseDown, isMousePressed: m.isMousePressed, isMouseReleased: m.isMouseReleased, isMouseMoved: m.isMouseMoved, isGamepadButtonPressed: m.isGamepadButtonPressed, isGamepadButtonDown: m.isGamepadButtonDown, isGamepadButtonReleased: m.isGamepadButtonReleased, getGamepadStick: m.getGamepadStick, isButtonPressed: m.isButtonPressed, isButtonDown: m.isButtonDown, isButtonReleased: m.isButtonReleased, setButton: m.setButton, getButton: m.getButton, pressButton: m.pressButton, releaseButton: m.releaseButton, getLastInputDeviceType: m.getLastInputDeviceType, charInputted: m.charInputted, loop: Z, wait: k, play: aa, setVolume: co, getVolume: lo, volume: ua, burp: ur, audioCtx: O.ctx, Line: Te, Rect: $, Circle: we, Ellipse: ke, Point: An, Polygon: ye, Vec2: E, Color: K, Mat4: he, Quad: z2, RNG: Xt, rand: ge, randi: wr, randSeed: Vo, vec2: v, rgb: I, hsl2rgb: To, quad: me, choose: Mo, chooseMultiple: Go, shuffle: Or, chance: Po, lerp: fe, tween: ee, easings: nt, map: Ve, mapc: So, wave: Sn, deg2rad: ue, rad2deg: lt, clamp: Se, evaluateQuadratic: ko, evaluateQuadraticFirstDerivative: _o, evaluateQuadraticSecondDerivative: No, evaluateBezier: Jt, evaluateBezierFirstDerivative: Uo, evaluateBezierSecondDerivative: Ho, evaluateCatmullRom: qo, evaluateCatmullRomFirstDerivative: zo, curveLengthApproximation: Vr, normalizedCurve: Yo, hermite: Lt, cardinal: Pr, catmullRom: jt, bezier: Wo, kochanekBartels: $o, easingSteps: Zo, easingLinear: Qo, easingCubicBezier: Jo, testLineLine: Vn, testRectRect: Er, testRectLine: Pn, testRectPoint: Bt, testCirclePolygon: Qt, testLinePoint: Gn, testLineCircle: Ft, isConvex: ns, triangulate: Rn, NavMesh: kn, drawSprite: gi, drawText: Jr, formatText: He, drawRect: ve, drawLine: _t, drawLines: kt, drawTriangle: Xn, drawCircle: Ue, drawEllipse: zn, drawUVQuad: it, drawPolygon: Ge, drawCurve: Yn, drawBezier: ii, drawFormattedText: qe, drawMasked: hi, drawSubtracted: bi, pushTransform: be, popTransform: pe, pushTranslate: Q, pushScale: rt, pushRotate: $e, pushMatrix: Ks, usePostEffect: D, makeCanvas: V, debug: w, scene: fa, getSceneName: ba, go: ha, onSceneLeave: ga, layers: pa, getLayers: la, setLayers: po, getDefaultLayer: ma, addLevel: Si, getData: S, setData: M, download: Fn, downloadJSON: ys, downloadText: Gr, downloadBlob: Mr, plug: R, ASCII_CHARS: Dn, canvas: m.canvas, addKaboom: ca, LEFT: E.LEFT, RIGHT: E.RIGHT, UP: E.UP, DOWN: E.DOWN, RED: K.RED, GREEN: K.GREEN, BLUE: K.BLUE, YELLOW: K.YELLOW, MAGENTA: K.MAGENTA, CYAN: K.CYAN, WHITE: K.WHITE, BLACK: K.BLACK, quit: pr, KEvent: oe, KEventHandler: Ye, KEventController: _e, cancel: s(() => Bn, "cancel") };
     c.k = Xe;
     let Cn = t18.plugins;
     if (Cn && Cn.forEach(R), t18.global !== false) for (let L in Xe) window[L] = Xe[L];
@@ -5759,7 +5759,10 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     canvas: document.querySelector("#game-container")
     // Attach to the container
   });
-  loadSprite("singleBox", "/game/assets/sprites/singleBox.png", {});
+  loadSprite("singleBox", "/game/assets/sprites/singleBox.png");
+  loadSprite("singleSpike", "/game/assets/sprites/singleSpike.png");
+  loadSprite("tripleSpike", "/game/assets/sprites/tripleSpike.png");
+  loadSprite("bg", "/game/assets/bg/bg.png");
   scene("start", () => {
     add([
       text("Press SPACE to Start", 24),
@@ -5769,6 +5772,28 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     onKeyPress("space", () => go("game"));
   });
   scene("game", () => {
+    setGravity(1200);
+    const bg1 = add([
+      sprite("bg", { width: width(), height: height() }),
+      pos(0, 0),
+      z(-10)
+    ]);
+    const bg2 = add([
+      sprite("bg", { width: width(), height: height() }),
+      pos(width(), 0),
+      z(-10)
+    ]);
+    onUpdate(() => {
+      const speed = 100;
+      bg1.move(-speed, 0);
+      bg2.move(-speed, 0);
+      if (bg1.pos.x <= -width()) {
+        bg1.pos.x = bg2.pos.x + width();
+      }
+      if (bg2.pos.x <= -width()) {
+        bg2.pos.x = bg1.pos.x + width();
+      }
+    });
     function jumpAndSpin(player2) {
       if (player2.isGrounded()) {
         player2.jump();
@@ -5783,55 +5808,110 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
         );
       }
     }
-    setGravity(1200);
+    add([
+      rect(width(), 48),
+      outline(4),
+      area(),
+      pos(0, height() - 48),
+      body({ isStatic: true })
+    ]);
     const player = add([
       sprite("singleBox"),
       pos(200, 200),
       anchor("center"),
       scale(5),
       area(),
-      body()
+      body(),
+      "player"
     ]);
-    onKeyPress("space", () => {
-      if (player.isGrounded()) {
-        jumpAndSpin(player);
-      }
-    });
     add([
       rect(width(), 48),
       outline(4),
       area(),
       pos(0, height() - 48),
-      // Give objects a body() component if you don't want other solid objects pass through
       body({ isStatic: true })
     ]);
+    function makePolygonSpike(spawnX, spawnY, speed) {
+      const hitbox1 = add([
+        pos(spawnX, spawnY),
+        polygon([
+          vec2(0, 22),
+          // bottom-left
+          vec2(11, 0),
+          // top-center
+          vec2(22, 22)
+          // bottom-right
+        ]),
+        area(),
+        scale(10),
+        body(),
+        anchor("center"),
+        scale(3),
+        "spike",
+        { speed }
+      ]);
+      return hitbox1;
+    }
+    function makeFalseSpike(spawnX, spawnY, speed) {
+      const hitbox2 = add([
+        sprite("singleSpike"),
+        pos(spawnX, spawnY),
+        area(),
+        body(),
+        scale(0.035),
+        anchor("center"),
+        "spike",
+        { speed }
+      ]);
+      return hitbox2;
+    }
+    function makeFalseTripleSpike(spawnX, spawnY, speed) {
+      const hitbox3 = add([
+        sprite("tripleSpike"),
+        pos(spawnX, spawnY),
+        area(),
+        body(),
+        scale(5),
+        anchor("center"),
+        "spike",
+        { speed }
+      ]);
+      return hitbox3;
+    }
+    onKeyPress("space", () => {
+      if (player.isGrounded()) {
+        jumpAndSpin(player);
+      }
+    });
+    loop(3, () => {
+      const spawnX = width() + 20;
+      const spawnY = height() - 120;
+      const speed = 360;
+      const determinator = rand(0, 3);
+      console.log(Math.floor(determinator));
+      switch (Math.floor(determinator)) {
+        case 0:
+          makeFalseTripleSpike(spawnX, spawnY, speed);
+          break;
+        case 1:
+          makeFalseSpike(spawnX, spawnY, speed);
+          break;
+        case 2:
+          makePolygonSpike(spawnX, spawnY, speed);
+          break;
+      }
+    });
     player.onCollide("spike", () => {
+      console.clear();
       addKaboom(player.pos);
       player.destroy();
-      shake(12);
+      go("start");
     });
     onUpdate("spike", (spike) => {
       spike.move(-spike.speed, 0);
       if (spike.pos.x < -30) {
         destroy(spike);
       }
-    });
-    loop(3, () => {
-      const spawnX = width() + 20;
-      const spawnY = height() - 64;
-      const speed = 360;
-      const triple_spike = chance(0.3);
-      const double_spike = chance(0.4);
-      const single_spike = chance(0.7);
-      add([
-        rect(60, 30),
-        pos(spwanX, spwanY),
-        area(),
-        body(),
-        anchor("center"),
-        "spike",
-        { speed }
-      ]);
     });
   });
   go("start");

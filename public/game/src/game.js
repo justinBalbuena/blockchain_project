@@ -8,8 +8,10 @@ kaplay({
     canvas: document.querySelector('#game-container') // Attach to the container
 });
 
-loadSprite("singleBox", "/game/assets/sprites/singleBox.png", {
-})
+loadSprite("singleBox", "/game/assets/sprites/singleBox.png")
+loadSprite("singleSpike", "/game/assets/sprites/singleSpike.png")
+loadSprite("tripleSpike", "/game/assets/sprites/tripleSpike.png")
+loadSprite("bg", "/game/assets/bg/bg.png")
 
 scene("start", () => {
     add([
@@ -18,16 +20,50 @@ scene("start", () => {
         anchor("center"),
     ]);
 
-    onKeyPress("space", () => go("game")); // Switch to "game" scene
+    onKeyPress("space", () => go("game")) // Switch to "game" scene
+    
 })
 
 scene("game", () => {
+    // debug.inspect = true
+    setGravity(1200);
+
+    /*------------Background------------*/
+    const bg1 = add([
+        sprite("bg", { width: width(), height: height() },),
+        pos(0, 0),
+        z(-10),
+    ]);
+      
+    const bg2 = add([
+        sprite("bg", { width: width(), height: height() }),
+        pos(width(), 0),
+        z(-10),
+    ]);
+
+    onUpdate(() => {
+        const speed = 100; // pixels per second
+      
+        bg1.move(-speed, 0);
+        bg2.move(-speed, 0);
+      
+        if (bg1.pos.x <= -width()) {
+          bg1.pos.x = bg2.pos.x + width();
+        }
+      
+        if (bg2.pos.x <= -width()) {
+          bg2.pos.x = bg1.pos.x + width();
+        }
+    });
+    /*----------------------------------*/
+
+    /*-------Animation Functions--------*/
     function jumpAndSpin(player) {
         if (player.isGrounded()) {
           player.jump();
           player.angle = 0;
       
-          // Animate a 360-degree spin while jumping
+          // Animate a 360-degree spin whi le jumping
           tween(
             0,
             360,
@@ -37,43 +73,122 @@ scene("game", () => {
           );
         }
     }
+    /*-----------------------------------*/
 
-    // debug.inspect = true
-    setGravity(1200);
-
+    /*--------------Objects--------------*/
+    // Platform To Hold Player
+    add([
+        rect(width(), 48),
+        outline(4),
+        area(),
+        pos(0, height() - 48),
+        body({ isStatic: true }),
+    ]);
+    
     const player = add([
         sprite("singleBox"),
         pos(200, 200),
         anchor("center"),
         scale(5),
         area(),
-        body()
+        body(),
+        "player"
     ])
 
+    // Platform To Hold Player
+    add([
+        rect(width(), 48),
+        outline(4),
+        area(),
+        pos(0, height() - 48),
+        body({ isStatic: true }),
+    ]);
 
-    // Simple movement
+    function makePolygonSpike(spawnX, spawnY, speed) {
+        const hitbox1 = add([
+            pos(spawnX, spawnY),
+            polygon([
+                vec2(0, 22),    // bottom-left
+                vec2(11, 0),   // top-center
+                vec2(22, 22),   // bottom-right
+            ]),
+            area(),
+            scale(10),
+            body(),
+            anchor("center"),
+            scale(3),
+            "spike", 
+            { speed: speed }
+        ])
+        return hitbox1
+    }
+
+    function makeFalseSpike(spawnX, spawnY, speed) {
+        const hitbox2 = add([
+            sprite("singleSpike"),
+            pos(spawnX, spawnY),
+            area(),
+            body(),
+            scale(0.035),
+            anchor("center"),
+            "spike",
+            {speed: speed}
+        ])
+        return hitbox2 
+    }
+
+    function makeFalseTripleSpike(spawnX, spawnY, speed) {
+        const hitbox3 = add([
+            sprite("tripleSpike"),
+            pos(spawnX, spawnY),
+            area(),
+            body(),
+            scale(5),
+            anchor("center"),
+            "spike",
+            {speed: speed}
+        ])
+        return hitbox3
+    }
+    /*----------------------------------------*/
+
+    /*-------------Key Press Rules------------*/
+    // Jump
     onKeyPress('space', () => {
         if (player.isGrounded()) {
             jumpAndSpin(player)
         }
     });
 
-    // Add a platform to hold the player
-    add([
-        rect(width(), 48),
-        outline(4),
-        area(),
-        pos(0, height() - 48),
-        // Give objects a body() component if you don't want other solid objects pass through
-        body({ isStatic: true }),
-    ]);
+    /*----------------------------------------*/
 
+    /*--------------Interactions--------------*/
+    loop(3, () => {
+        const spawnX = width() + 20
+        const spawnY = height() - 120
+        const speed = 360
 
+        const determinator = rand(0, 3)
+        console.log(Math.floor(determinator))
+
+        switch(Math.floor(determinator)) {
+            case 0:
+                makeFalseTripleSpike(spawnX, spawnY, speed)
+                break
+            case 1:
+                makeFalseSpike(spawnX, spawnY, speed)
+                break
+            case 2:
+                makePolygonSpike(spawnX, spawnY, speed)
+                break
+        }
+    })
 
     player.onCollide("spike", () => {
+        console.clear()
         addKaboom(player.pos)
         player.destroy()
-        shake(12)
+        go("start")
     })
 
     onUpdate("spike", (spike) => {
@@ -81,25 +196,6 @@ scene("game", () => {
         if (spike.pos.x < -30) {
             destroy(spike)
         }
-    })
-
-    loop(3, () => {
-        const spawnX = width() + 20
-        const spawnY = height() - 64
-        const speed = 360
-        const triple_spike = chance(0.3)
-        const double_spike = chance (0.4)
-        const single_spike = chance(0.7)
-
-        add([
-            rect(60, 30),
-            pos(spwanX, spwanY),
-            area(),
-            body(),
-            anchor("center"),
-            "spike",
-            { speed: speed }
-        ])
     })
 
 })
