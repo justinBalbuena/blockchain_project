@@ -5765,6 +5765,11 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   loadSprite("bg", "/game/assets/bg/bg.png");
   scene("start", () => {
     add([
+      sprite("bg", { width: width(), height: height() }),
+      pos(0, 0),
+      z(-10)
+    ]);
+    add([
       text("Press SPACE to Start", 24),
       pos(center()),
       anchor("center")
@@ -5773,6 +5778,19 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   });
   scene("game", () => {
     setGravity(1200);
+    let score = 0;
+    const scoreLabel = add([
+      text(`Score: ${score}`, { size: 24 }),
+      pos(width() - 200, 24),
+      fixed(),
+      // keeps it in the same place on screen
+      z(100)
+      // stays on top of other elements
+    ]);
+    loop(1, () => {
+      score += 1;
+      scoreLabel.text = `Score: ${score}`;
+    });
     const bg1 = add([
       sprite("bg", { width: width(), height: height() }),
       pos(0, 0),
@@ -5878,6 +5896,33 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       ]);
       return hitbox3;
     }
+    function makeFlyingSpike(spawnX, spawnY, speed) {
+      const hitbox4 = add([
+        pos(spawnX, spawnY),
+        area(),
+        body({ isStatic: true }),
+        anchor("center"),
+        polygon([
+          vec2(-33, 11),
+          vec2(22, 22),
+          vec2(22, 0)
+        ]),
+        "spike",
+        { speed }
+      ]);
+    }
+    function makeJumpPlatform(spawnX, spawnY, speed) {
+      const platform = add([
+        rect(100, 10),
+        body({ isStatic: true }),
+        pos(spawnX - 200, spawnY),
+        area(),
+        anchor("center"),
+        "platform",
+        { speed }
+      ]);
+      return platform;
+    }
     onKeyPress("space", () => {
       if (player.isGrounded()) {
         jumpAndSpin(player);
@@ -5900,6 +5945,9 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
           makePolygonSpike(spawnX, spawnY, speed);
           break;
       }
+      if (chance(0.9)) {
+        makeJumpPlatform(spawnX, spawnY - 50, speed);
+      }
     });
     player.onCollide("spike", () => {
       console.clear();
@@ -5907,10 +5955,34 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       player.destroy();
       go("start");
     });
+    player.onCollide("platform", (platform) => {
+      platform.speed -= 100;
+      if (chance(0.5)) {
+        makeFlyingSpike(width() + 20, height() - 220, 400);
+        score += 2;
+      }
+    });
+    onUpdate("player", (player2) => {
+      if (player2.pos.x < 0) {
+        player2.pos.x = 200;
+      }
+      if (player2.pos.x > width()) {
+        console.clear();
+        addKaboom(player2.pos);
+        player2.destroy();
+        go("start");
+      }
+    });
     onUpdate("spike", (spike) => {
       spike.move(-spike.speed, 0);
       if (spike.pos.x < -30) {
         destroy(spike);
+      }
+    });
+    onUpdate("platform", (platform) => {
+      platform.move(-platform.speed, 0);
+      if (platform.pos.x < -30) {
+        destroy(platform);
       }
     });
   });
