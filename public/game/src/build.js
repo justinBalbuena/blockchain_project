@@ -5749,6 +5749,8 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   var E2 = Xa;
 
   // public/game/src/game.js
+  var gun = window.gun;
+  console.log("Gun is: ", gun);
   E2({
     global: true,
     // Make Kaboom functions globally available
@@ -5756,7 +5758,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     // Game width
     height: 600,
     // Game height
-    canvas: document.querySelector("#game-container")
+    canvas: document.querySelector("#game_container")
     // Attach to the container
   });
   loadSprite("singleBox", "/game/assets/sprites/singleBox.png");
@@ -5945,11 +5947,18 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
           makePolygonSpike(spawnX, spawnY, speed);
           break;
       }
-      if (chance(0.9)) {
+      if (chance(0.4)) {
         makeJumpPlatform(spawnX, spawnY - 50, speed);
       }
     });
     player.onCollide("spike", () => {
+      const username = localStorage.getItem("username") || "anon";
+      gun.get("gameScores").set({
+        username,
+        score,
+        timestamp: Date.now()
+      });
+      console.log("Score saved:", score);
       console.clear();
       addKaboom(player.pos);
       player.destroy();

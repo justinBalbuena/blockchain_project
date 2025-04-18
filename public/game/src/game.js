@@ -1,11 +1,13 @@
 import kaplay from "kaplay";
 
+const gun = window.gun
+console.log("Gun is: ", gun)
 // Initialize Kaplay
 kaplay({
     global: true, // Make Kaboom functions globally available
     width: 1200,   // Game width
     height: 600,  // Game height
-    canvas: document.querySelector('#game-container') // Attach to the container
+    canvas: document.querySelector('#game_container') // Attach to the container
 });
 
 loadSprite("singleBox", "/game/assets/sprites/singleBox.png")
@@ -231,14 +233,21 @@ scene("game", () => {
                 makePolygonSpike(spawnX, spawnY, speed)
                 break
         }
-        // makeJumpPlatform(spawnX, spawnY - 50, speed)
 
-        if (chance(0.9)) {
+        if (chance(0.4)) {
             makeJumpPlatform(spawnX, spawnY - 50, speed)
         }
     })
 
     player.onCollide("spike", () => {
+        const username = localStorage.getItem("username") || "anon"; // or any fallback
+        gun.get("gameScores").set({
+            username: username,
+            score: score,
+            timestamp: Date.now()
+        });
+        
+        console.log("Score saved:", score);
         console.clear()
         addKaboom(player.pos)
         player.destroy()

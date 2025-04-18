@@ -1,7 +1,7 @@
 :root {
-    --primary_color: #748FFC;
-    --accent_color: #9775fa;
-    --highlight_color: #495057;
+    --primary_color: #A3B0E6;
+    --accent_color: #270E71;
+    --highlight_color: #2E3033;
     --highlight_color2: #DBE4FF;
     --background_color: #ADB5BD;
 }
@@ -12,10 +12,16 @@
 }
   
 body {
-    width: 100vh;
-    height: 100vh;
     font-family: "Noto Sans", sans-serif;
-    color: var(--accent_color)
+    color: var(--accent_color);
+}
+
+h1, p {
+    margin-bottom: 16px;
+}
+
+.main_content h1 {
+    color: black;
 }
 
 /*Reusable Elements*/
@@ -54,7 +60,7 @@ body {
     width: 100%;
     text-align: center;
     padding: 12px 0;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
     text-decoration: none;
     transition: 0.3s ease;
@@ -116,3 +122,8 @@ a:active {
     height: 100vh;
 }
 /*---------------------*/
+
+.canvas_div {
+    display: flex;
+    justify-content: center;
+}

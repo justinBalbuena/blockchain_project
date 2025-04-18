@@ -1,6 +1,8 @@
-const gun = Gun([
-  'https://gun-manhattan.herokuapp.com/gun', // Public relay for peer discovery
-]);
+console.log("🔥 gunConfig.js is running");
 
-console.log('Connected peers:', gun._.opt.peers);
-export default gun;
+const gun = Gun([
+    'https://gun-manhattan.herokuapp.com/gun',  // Public relay for peer discovery
+]);
+    
+window.gun = gun
+console.log('Connected peers:', gun._.opt.peers)

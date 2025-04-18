@@ -3,10 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Gun Peer Node</title>
+
+  <!-- Load Gun from CDN -->
   <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
-  <script type="module" src="/js/gunConfig.js"></script>
+
+  <!-- Load gunConfig -->
+  <script src="/js/gunConfig.js"></script>
+
+  <!-- Load game AFTER gun is globally available -->
+  <script type="module" src="/game/src/build.js"></script>
   
-  <!--Fonts-->
+  <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -17,7 +24,7 @@
 <body>
   
    <div class="nav_bar">
-      <div class="nav_name">Bebop</div>
+      <div class="nav_name">Impossible Dash</div>
 
       <div class="nav_links_sect">
         <a href="/" class="nav_link">Home</a>
@@ -28,17 +35,14 @@
     </div>
 
     <div class="main_content">
-        <h1>Welcome to the Game Page</h1>
-        <p>This is where the content will go.</p>
+        <h1>Impossible Dash</h1>
 
-        <canvas id="game-container"></canvas>
+        <div class="canvas_div">
+          <canvas id="game_container"></canvas>
+        </div>
         <script type="module" src="/game/src/build.js"></script>
     </div>
 
-
-
-  
-  <script type="module" src="/js/gunConfig.js"></script>
   <script type="module" src="/js/blockchain.js"></script>
   <script type="module" src="/js/gameLogic.js"></script>
   <script type="module" src="/js/script.js"></script>
