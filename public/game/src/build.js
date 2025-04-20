@@ -5952,14 +5952,17 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       }
     });
     player.onCollide("spike", () => {
+      console.clear();
       const username = localStorage.getItem("username") || "anon";
-      gun.get("gameScores").set({
-        username,
-        score,
-        timestamp: Date.now()
+      gun.get("users").get(username).get("highScore").once((prevScore) => {
+        if (!prevScore || score > prevScore) {
+          gun.get("users").get(username).get("highScore").put(score);
+          console.log(`\u{1F3C6} New high score for ${username}: ${score}`);
+        } else {
+          console.log(`\u2139\uFE0F Score ${score} not higher than previous: ${prevScore}`);
+        }
       });
       console.log("Score saved:", score);
-      console.clear();
       addKaboom(player.pos);
       player.destroy();
       go("start");

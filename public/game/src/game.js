@@ -240,15 +240,19 @@ scene("game", () => {
     })
 
     player.onCollide("spike", () => {
-        const username = localStorage.getItem("username") || "anon"; // or any fallback
-        gun.get("gameScores").set({
-            username: username,
-            score: score,
-            timestamp: Date.now()
-        });
-        
-        console.log("Score saved:", score);
         console.clear()
+
+        const username = localStorage.getItem("username") || "anon"; // or any fallback
+        gun.get("users").get(username).get("highScore").once((prevScore) => {
+            if (!prevScore || score > prevScore) {
+              gun.get("users").get(username).get("highScore").put(score);
+              console.log(`🏆 New high score for ${username}: ${score}`);
+            } else {
+              console.log(`ℹ️ Score ${score} not higher than previous: ${prevScore}`);
+            }
+        });
+
+        console.log("Score saved:", score);
         addKaboom(player.pos)
         player.destroy()
         go("start")
