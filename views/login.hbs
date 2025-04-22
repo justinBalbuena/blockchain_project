@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gun Peer Node</title>
+  <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+  <script type="module" src="/js/gunConfig.js"></script>
+  
+  <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <!----->
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  
+   <div class="nav_bar">
+      <div class="nav_name">Impossible Dash</div>
+
+      <div class="nav_links_sect">
+        <a href="/" class="nav_link">Home</a>
+        <a href="/profile" class="nav_link">Profile</a>
+        <a href="/game" class="nav_link">Game</a>
+        <a href="/leaderboard" class="nav_link">Leader Board</a>
+        <a href="/login" class="nav_link">Log In</a>
+      </div>
+    </div>
+
+    <div class="main_content">
+        <h1>Welcome to the Log In Page</h1>
+        <div>
+            <h2>Sign Up</h2>
+                <form action="/users" method="POST" id="signup-form">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" required><br>
+
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" required><br>
+
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" required><br>
+
+                    <button type="submit" class="form_button">Create Account</button>
+                </form>
+
+            <h2>Log In</h2>
+                <form action="/users/login" method="POST" id="login-form">
+                    <label for="email">Email:</label>
+                    <input type="text" name="email" required><br>
+
+                    <label for="password">Password:</label>
+                    <input type="text" name="password" required><br>
+
+                    <button type="submit" class="form_button">Log In</button>
+                </form> 
+        </div>
+        
+    </div>
+
+  <script src="/js/viewScripts/signupScript.js"></script>
+  <script src="/js/viewScripts/loginScript.js"></script>
+</body>
+</html>

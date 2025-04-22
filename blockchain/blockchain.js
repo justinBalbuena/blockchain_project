@@ -1,7 +1,7 @@
 const crypto = require('crypto')
 
 class Block {
-    constructor(index, data, previousHash = '', nonce = 0) {
+    constructor(index, data, previousHash = '', score = 0) {
         /* 
             index: block number
             nonce: nonce
@@ -10,7 +10,7 @@ class Block {
         */
         this.index = index
         this.data = data
-        this.nonce = nonce
+        this.score = score
         this.previousHash = previousHash
         this.hash = this.calculateHash()
     }
@@ -43,8 +43,8 @@ class Blockchain {
         return this.chain[this.chain.length - 1]
     }
 
-    addBlock(data, nonce) {
-        const usersBlock = new Block(this.chain.length, data, 0, nonce)
+    addBlock(data, score) {
+        const usersBlock = new Block(this.chain.length, data, 0, score)
         usersBlock.previousHash = this.getLatestBlock().hash
         usersBlock.hash = usersBlock.calculateHash()
 
