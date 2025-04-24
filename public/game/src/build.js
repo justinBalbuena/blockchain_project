@@ -5954,10 +5954,10 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     player.onCollide("spike", () => {
       console.clear();
       const username = localStorage.getItem("username") || "anon";
-      gun.get("users").get(username).get("highScore").once((prevScore) => {
+      gun.get("tempScores").get(username).once((prevScore) => {
         if (!prevScore || score > prevScore) {
-          gun.get("users").get(username).get("highScore").put(score);
-          console.log(`\u{1F3C6} New high score for ${username}: ${score}`);
+          gun.get("tempScores").get(username).put(score);
+          console.log(`\u{1F3C6} New top score for ${username}: ${score}`);
         } else {
           console.log(`\u2139\uFE0F Score ${score} not higher than previous: ${prevScore}`);
         }

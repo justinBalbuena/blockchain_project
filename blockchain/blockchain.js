@@ -18,7 +18,7 @@ class Block {
     calculateHash() {
         return crypto
             .createHash('sha256')
-            .update((this.data + this.previousHash + this.nonce).replaceAll(" ", ""))
+            .update((this.index + JSON.stringify(this.data) + this.previousHash + this.score).replaceAll(" ", ""))
             .digest('hex')
     }
 
@@ -29,12 +29,11 @@ class Block {
 
 class Blockchain {
     constructor() {
-        /*This begins the chain and by calling createGenesisBlock(), the chain has a genesis block the moment its created*/
+        // This begins the chain and by calling createGenesisBlock(), the chain has a genesis block the moment its created
         this.chain = [this.createGenesisBlock()];
     }
 
     // no need to check if there is any genesis blokc in already
-    // aka i ran into error where if you do check, the array doesn't even exist yet so literally impossible
     createGenesisBlock() {
         return new Block(0, 'Genesis Block for Chain', '0')
     }
@@ -43,6 +42,7 @@ class Blockchain {
         return this.chain[this.chain.length - 1]
     }
 
+    // When adding a block, "data" should only consist of the username and timestamp
     addBlock(data, score) {
         const usersBlock = new Block(this.chain.length, data, 0, score)
         usersBlock.previousHash = this.getLatestBlock().hash
@@ -81,6 +81,10 @@ class Blockchain {
 }
 
 const gameBlockChain =  new Blockchain()
+
+
+
+
 
 module.exports = {
     Block,

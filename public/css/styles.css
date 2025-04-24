@@ -155,10 +155,15 @@ a:active {
 }
 
 .form_button:hover {
-    background-color: var(--highlight_color);
+    background-color: var(--highlight_color); 
     color: var(--primary_color);
 }
-
-
-
 /*---------------------*/
+
+
+/*--------Block Display--------*/
+.block_card {
+    display: block;
+    background-color: var(--highlight_color);
+}
+/*-----------------------------*/

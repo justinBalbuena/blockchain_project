@@ -1,12 +1,14 @@
 const mongoose = require('../src/db/mongoose.js')
 const userRouter = require('../src/routers/user.js')
-
+const os = require("os");
+const crypto = require("crypto");
 const express = require('express')
 const path = require('path')
 const Gun = require('gun')
 const http = require('http')
 // const hbs = require('hbs')
-const { gameBlockChain } = require('../blockchain/blockchain.js') // if using CommonJS
+const { gameBlockChain } = require('../blockchain/blockchain.js')
+const { syncChainFromGun } = require('../blockchain/consensus.js')
 
 const app = express()
 const port = process.argv[2] || 5000
@@ -47,9 +49,17 @@ app.get('/profile', (req, res) => {
   res.render('profile', { title: 'Profile Page' })
 })
 
+app.get('/login', (req, res) => {
+  res.render('login', { title: 'Login Page'})
+})
+
 app.get("/chain", (req, res) => {
-  res.json(gameBlockChain.chain);
+  res.render('chain', {title: 'Blockchain Page'})
 });
+
+app.get("/chain/json", (req, res) => {
+  res.json(gameBlockChain.chain);
+})
 
 // Create HTTP server
 const server = http.createServer(app)
@@ -58,58 +68,111 @@ server.listen(port, () => {
 })
 
 // Attach Gun.js to the server
-const gun = Gun({ web: server, peers: ['https://gun-manhattan.herokuapp.com/gun'] })
+const gun = Gun({ web: server, file: false, peers: ['https://gun-manhattan.herokuapp.com/gun'] })
+console.log("🧹 Resetting high scores on startup...");
+syncChainFromGun(gun, gameBlockChain)
+
+const peerId = os.hostname() + "-" + crypto.randomBytes(4).toString("hex");
+
+let localUsername = "anon";
+
+// Listen for identity assigned to this node
+gun.get("nodeIdentity").get(peerId).on((identity) => {
+  if (identity?.username) {
+    localUsername = identity.username;
+    console.log("✅ Synced node identity:", localUsername, "via", peerId);
+  }
+});
+
+/*---Saving Genesis Block---*/
+const genesisBlock = gameBlockChain.getLatestBlock();
+
+gun.get("chain").get(genesisBlock.index).once((existing) => {
+  if (!existing) {
+    console.log("🔧 Saving genesis block to Gun...");
+    gun.get("chain").get(genesisBlock.index).put({ ...genesisBlock });
+  } else {
+    console.log("✅ Genesis block already exists in Gun.");
+  }
+});
+/*---------------------------*/
+
+gun.get("tempScores").map().once((userData, username) => {
+  if (userData && userData.highScore !== undefined) {
+    gun.get("tempScores").get(username).get("highScore").put(null); // clears it
+    setTimeout(() => {
+      gun.get("tempScores").get(username).get("highScore").put(0); // resets it
+    }, 500);
+  }
+});
 
 // console.log('Gun.js is running with peers:', gun._.opt.peers)
-
-// app.post('/create-user', async (req, res) => {
-//   try {
-//     const user = new User({
-//       name: "TestUser",
-//       email: "test@example.com",
-//       password: "test1234"
-//     });
-
-//     await user.save();
-//     res.send({ user });
-//   } catch (e) {
-//     res.status(400).send(e);
-//   }
-// });
-
-
-
-
 
 
 
 // Block Creation
 setInterval(() => {
-  let topScore = 0;
-  let topUser = "none";
+  console.log("⏱️ Checking scores...");
 
-  gun.get("users").map().once((userData, username) => {
-    if (userData && userData.highScore > topScore) {
-      topScore = userData.highScore
-      topUser = username
+  const scores = [];
+
+  gun.get("tempScores").map().once((score, username) => {
+    if (typeof score === "number") {
+      scores.push({ username, score });
     }
   });
 
-  // slight delay to ensure map() finishes
   setTimeout(() => {
-    if (topUser !== "none") {
-      const blockData = {
-        username: topUser,
-        score: topScore,
-        timestamp: Date.now()
+    if (scores.length === 0) {
+      console.log("⚠️ No users found with scores.")
+      return;
+    }
+
+    // ✅ Find the highest scoring user
+    const top = scores.reduce((max, user) =>
+      user.score > max.score ? user : max,
+    { username: "none", score: 0 });
+
+    const blockData = {
+      username: top.username,
+      timestamp: Date.now()
+    };
+
+    gun.get("nodeIdentity").once((identity) => {
+      console.log(identity)
+      const localUsername = identity?.username || "anon";
+      
+      console.log("localUsername: ", localUsername)
+      if (!localUsername) {
+        console.log("⏳ Waiting for node identity...");
+        return; // wait for next interval
       }
 
-      gameBlockChain.addBlock(JSON.stringify(blockData), Math.floor(Math.random() * 100000))
-      console.log("🔗 New block created:", gameBlockChain.getLatestBlock())
-    }
-  }, 2000)
+      if (localUsername === top.username) {
+        gameBlockChain.addBlock(JSON.stringify(blockData), top.score);
+        const newBlock = gameBlockChain.getLatestBlock();
+        gun.get("chain").get(newBlock.index).put({ ...newBlock });
+    
+        console.log("✅ Mined by:", localUsername);
+      } else {
+        console.log("⛔ Skipped mining — logged in as", localUsername, "but top scorer is", top.username);
+      }
+    });
 
-  gun.get("users").map().once((userData, userName) => {
-    gun.get("users").get(userName).get("highScore").put(0)
-  })
-}, 60 * 1000) // Every 1 minute (for now)
+
+    // gameBlockChain.addBlock(blockData, top.score)
+
+    // //holds new block in the gun chain
+    // const newBlock = gameBlockChain.getLatestBlock()
+    // gun.get("chain").get(newBlock.index).put({ ... newBlock})
+
+    // console.log("📝 Block saved to Gun at index", newBlock.index);
+
+    // console.log("🔗 New block created:", gameBlockChain.getLatestBlock())
+  }, 3000); // ⏱️ Give Gun enough time to finish streaming results
+
+  // Reset temp scores for next round
+  gun.get("tempScores").map().once((_, username) => {
+    gun.get("tempScores").get(username).put(null);
+  });
+}, 60 * 1000);
