@@ -5,7 +5,8 @@
   <title>Gun Peer Node</title>
   <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
   <script src="/js/gunConfig.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+
   <!--Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +31,10 @@
     </div>
 
     <div class="main_content">
-        <h1>Blockchain</h1>
+        <div class="chain_display_header">
+          <h1>Blockchain</h1>
+          <button id="refresh-chain">Refresh Chain</button>
+        </div>
         <div class="chain_container"></div>
     </div>
 

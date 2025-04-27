@@ -167,3 +167,26 @@ a:active {
     background-color: var(--highlight_color);
 }
 /*-----------------------------*/
+
+
+
+
+.mining_controls {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.mining_button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.mining_button:hover {
+    background-color: #666;
+}

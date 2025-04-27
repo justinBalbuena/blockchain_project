@@ -241,24 +241,24 @@ scene("game", () => {
     })
 
     player.onCollide("spike", () => {
-        console.clear();
+        console.clear()
       
-        const username = localStorage.getItem("username") || "anon";
+        const username = localStorage.getItem("username") || "anon"
       
         gun.get("tempScores").get(username).once((prevScore) => {
           if (!prevScore || score > prevScore) {
-            gun.get("tempScores").get(username).put(score);
-            console.log(`🏆 New top score for ${username}: ${score}`);
+            gun.get("tempScores").get(username).put(score)
+            console.log(`🏆 New top score for ${username}: ${score}`)
           } else {
-            console.log(`ℹ️ Score ${score} not higher than previous: ${prevScore}`);
+            console.log(`ℹ️ Score ${score} not higher than previous: ${prevScore}`)
           }
-        });
+        })
       
-        console.log("Score saved:", score);
-        addKaboom(player.pos);
-        player.destroy();
-        go("start");
-      });
+        console.log("Score saved:", score)
+        addKaboom(player.pos)
+        player.destroy()
+        go("start")
+    });
 
     player.onCollide("platform", (platform) => {
         platform.speed -= 100

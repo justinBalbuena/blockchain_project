@@ -1,7 +1,7 @@
 const crypto = require('crypto')
 
 class Block {
-    constructor(index, data, previousHash = '', score = 0) {
+    constructor(index, username, previousHash = '', score = 0) {
         /* 
             index: block number
             nonce: nonce
@@ -9,7 +9,8 @@ class Block {
             previousHash: previous block's hash value
         */
         this.index = index
-        this.data = data
+        this.username = username
+        this.timestamp = Date.now()
         this.score = score
         this.previousHash = previousHash
         this.hash = this.calculateHash()
@@ -18,7 +19,7 @@ class Block {
     calculateHash() {
         return crypto
             .createHash('sha256')
-            .update((this.index + JSON.stringify(this.data) + this.previousHash + this.score).replaceAll(" ", ""))
+            .update((this.index + this.username + this.timestamp + this.score + this.previousHash).replaceAll(" ", ""))
             .digest('hex')
     }
 
@@ -35,7 +36,7 @@ class Blockchain {
 
     // no need to check if there is any genesis blokc in already
     createGenesisBlock() {
-        return new Block(0, 'Genesis Block for Chain', '0')
+        return new Block(0, 'Genesis Block', '0')
     }
 
     getLatestBlock() {
@@ -43,8 +44,8 @@ class Blockchain {
     }
 
     // When adding a block, "data" should only consist of the username and timestamp
-    addBlock(data, score) {
-        const usersBlock = new Block(this.chain.length, data, 0, score)
+    addBlock(username, score) {
+        const usersBlock = new Block(this.chain.length, username, 0, score)
         usersBlock.previousHash = this.getLatestBlock().hash
         usersBlock.hash = usersBlock.calculateHash()
 
@@ -81,9 +82,6 @@ class Blockchain {
 }
 
 const gameBlockChain =  new Blockchain()
-
-
-
 
 
 module.exports = {

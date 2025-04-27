@@ -35,7 +35,7 @@ logInForm.addEventListener("submit", async (e) => {
 
     // Store user login info
     const username = localStorage.getItem("username");
-    gun.get("nodeIdentity").get(peerId).put({ username });
+    gun.get("nodeIdentity").get(peerId).put({ username, peerId });
 
     console.log("🧠 Saved identity:", { peerId, username });
 
