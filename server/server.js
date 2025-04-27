@@ -11,7 +11,7 @@ const { gameBlockChain } = require('../config/blockchainServer.js')
 const { syncChainFromGun } = require('../public/js/blockchain/consensus.js')
 
 const app = express()
-const port = process.argv[2] || 5000
+const port = process.env.PORT
 
 // Serve static assets (CSS, images, JS)
 const publicDirectoryPath = path.join(__dirname, '../public')
