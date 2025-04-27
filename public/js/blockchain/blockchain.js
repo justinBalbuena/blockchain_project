@@ -43,7 +43,7 @@ class Blockchain {
 
     // When adding a block, "data" should only consist of the username and timestamp
     addBlock(username, score) {
-        const usersBlock = new Block(this.chain.length, username, 0, score)
+        const usersBlock = new Block(this.getLatestBlock().index + 1, username, 0, score)
         usersBlock.previousHash = this.getLatestBlock().hash
         usersBlock.hash = usersBlock.calculateHash()
 
