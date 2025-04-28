@@ -1,6 +1,5 @@
 node_modules/
 libstuff/
-process.env
-radata
+radata/
 radata-!-hiy.tmp
-/.env
+.env
