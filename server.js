@@ -14,11 +14,11 @@ const app = express()
 const port = process.env.PORT
 
 // Serve static assets (CSS, images, JS)
-const publicDirectoryPath = path.join(__dirname, '../public')
+const publicDirectoryPath = path.join(__dirname, './public')
 app.use(express.static(publicDirectoryPath))
 
 // Serve JavaScript files correctly
-app.use('/js', express.static(path.join(__dirname, '../public/js')))
+app.use('/js', express.static(path.join(__dirname, './public/js')))
 
 // Using routes
 app.use(express.json())
@@ -26,7 +26,7 @@ app.use(userRouter)
 
 
 // Set Handlebars as the templating engine
-const viewsPath = path.join(__dirname, '../views')
+const viewsPath = path.join(__dirname, './views')
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
 
