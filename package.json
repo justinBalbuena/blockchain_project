@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server.js",
     "build": "esbuild public/game/src/game.js --bundle --outfile=public/game/src/build.js",
     "watch": "esbuild public/game/src/game.js --bundle --outfile=public/game/src/build.js --watch",
-    "dev": "concurrently \"npm run watch\" \"nodemon ./server/server.js -e js,hbs,css -- %npm_config_port%\""
+    "dev": "concurrently \"npm run watch\" \"nodemon ./server.js -e js,hbs,css -- %npm_config_port%\""
   },
   "author": "",
   "license": "ISC",

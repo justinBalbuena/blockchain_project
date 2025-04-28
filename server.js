@@ -1,5 +1,5 @@
-const mongoose = require('../src/db/mongoose.js')
-const userRouter = require('../src/routers/user.js')
+const mongoose = require('./src/db/mongoose.js')
+const userRouter = require('./src/routers/user.js')
 const os = require("os");
 const crypto = require("crypto");
 const express = require('express')
@@ -7,8 +7,8 @@ const path = require('path')
 const Gun = require('gun')
 const http = require('http')
 const hbs = require('hbs')
-const { gameBlockChain } = require('../config/blockchainServer.js')
-const { syncChainFromGun } = require('../public/js/blockchain/consensus.js')
+const { gameBlockChain } = require('./config/blockchainServer.js')
+const { syncChainFromGun } = require('./src/consensus/consensus.js')
 
 const app = express()
 const port = process.env.PORT
