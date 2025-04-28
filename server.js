@@ -9,7 +9,7 @@ const { gameBlockChain } = require('./config/blockchainServer.js')
 const { syncChainFromGun } = require('./src/consensus/consensus.js')
 
 const app = express()
-const port = process.env.PORT
+const port = process.env.PORT || 3000
 
 // Serve static assets (CSS, images, JS)
 const publicDirectoryPath = path.join(__dirname, '/public')
