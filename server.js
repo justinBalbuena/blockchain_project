@@ -1,7 +1,5 @@
 const mongoose = require('./src/db/mongoose.js')
 const userRouter = require('./src/routers/user.js')
-const os = require("os");
-const crypto = require("crypto");
 const express = require('express')
 const path = require('path')
 const Gun = require('gun')
@@ -14,11 +12,11 @@ const app = express()
 const port = process.env.PORT
 
 // Serve static assets (CSS, images, JS)
-const publicDirectoryPath = path.join(__dirname, './public')
+const publicDirectoryPath = path.join(__dirname, '/public')
 app.use(express.static(publicDirectoryPath))
 
 // Serve JavaScript files correctly
-app.use('/js', express.static(path.join(__dirname, './public/js')))
+app.use('/js', express.static(path.join(__dirname, '/public/js')))
 
 // Using routes
 app.use(express.json())
@@ -26,7 +24,7 @@ app.use(userRouter)
 
 
 // Set Handlebars as the templating engine
-const viewsPath = path.join(__dirname, './views')
+const viewsPath = path.join(__dirname, '/views')
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
 
@@ -57,9 +55,9 @@ app.get("/chain", (req, res) => {
   res.render('chain', {title: 'Blockchain Page'})
 });
 
-app.get("/chain/json", (req, res) => {
-  res.json(gameBlockChain.chain);
-})
+// app.get("/chain/json", (req, res) => {
+//   res.json(gameBlockChain.chain);
+// })
 
 // Create HTTP server
 const server = http.createServer(app)
