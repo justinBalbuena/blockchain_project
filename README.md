@@ -14,11 +14,11 @@ This project uses several npm packages and web APIs to enable full-stack develop
 - **Link**: [gun on npm](https://www.npmjs.com/package/gun)
 - **Description**: A decentralized, peer-to-peer database that syncs in real-time. Used to build offline-first and collaborative applications, including decentralized ledgers and games.
 
-### **HBS**
+### **hbs**
 - **Link**: [hbs on npm](https://www.npmjs.com/package/hbs)
 - **Description**: A Handlebars view engine for Express. Allows server-side rendering of HTML templates with dynamic data binding.
 
-### **Kaplay**
+### **KAPLAY**
 - **Link**: [kaplay on npm](https://www.npmjs.com/package/kaplay)
 - **Description**: A lightweight 2D JavaScript game engine for browser-based games. Provides sprite rendering, game loop control, and simple input handling.
 
@@ -34,6 +34,9 @@ This project uses several npm packages and web APIs to enable full-stack develop
 - **Link**: [bcrypt on npm](https://www.npmjs.com/package/bcrypt)
 - **Description**: A password-hashing library for Node.js using the bcrypt algorithm. Ensures secure storage and comparison of user credentials.
 
+### **leo-profanity**
+- **Link**: [leo-profanity on npm](https://www.npmjs.com/package/leo-profanity)
+- **Description**: A profanity detection library for Node.js. Used to validate usernames free of profanity.
 ---
 
 ## Cryptography Tools
