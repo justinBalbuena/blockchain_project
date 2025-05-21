@@ -4,7 +4,7 @@ This project uses several npm packages and web APIs to enable full-stack develop
 
 ---
 
-## 📦 NPM Packages
+## NPM Packages
 
 ### **Express**
 - **Link**: [express on npm](https://www.npmjs.com/package/express)
@@ -47,6 +47,19 @@ This project uses several npm packages and web APIs to enable full-stack develop
 - **Description**: A JavaScript library for cryptographic operations such as AES encryption and SHA hashing. Can be used in both Node.js and browser environments.
 
 ---
+
+### **Deployment**
+- The site is deployed at:
+- https://blockchain-project-rwj6.onrender.com
+
+### **How to Save Scores**
+- To have your score recorded:
+
+- Go to the Log In section and sign in to an account. This will save your username.
+
+- Then head to the Game page and enable mining on your device.
+
+- Your top score will be broadcast and saved through the decentralized network.
 
 ## Installation
 
