@@ -1,8 +1,7 @@
 const mongoose = require("mongoose")
 const validator = require("validator")
 const bcrypt = require("bcryptjs")
-const {Filter} = require("bad-words")
-const filter = new Filter;
+const leoProfanity = require("leo-profanity")
 //const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
@@ -11,7 +10,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
     validate(value) {
-      if (filter.isProfane(value.toLowerCase())) {
+      if (leoProfanity.check(value)) {
         throw new Error("Please take out any Profanities from your user name")
       }
     }
